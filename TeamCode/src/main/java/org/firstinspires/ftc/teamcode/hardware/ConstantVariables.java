@@ -28,4 +28,8 @@ public class ConstantVariables {
     public static final double K_MAX_CLIBER = 1465;
 
     public static final double K_DRIVE_ERROR_P = 250; // higher = less sensitive
+
+    public static final double K_ARM_ROTATE_PPR = 288; //encoder counts per rotation of arm rotator
+
+    public static final double K_ARM_GEAR_RATIO = 1.0/2;
 }

@@ -112,6 +112,9 @@ public class Control extends Devices {
     }
 
     public static class auto {
+        public static double armEncoderToAngle(double encoderReading) {
+            return encoderReading/ConstantVariables.K_ARM_ROTATE_PPR* 360*ConstantVariables.K_ARM_GEAR_RATIO;
+        }
 
         public static void spinCarousel(DcMotor motor) {
             int shiftValue = 1000; // increase/decrease depending on how long you want the motor to spin
@@ -451,6 +454,48 @@ public class Control extends Devices {
             if (red > blue + green) {
                 return true;
             } else return false;
+        }
+    }
+
+    public static class pid {
+        private ElapsedTime runtime;
+        private double oldError;
+        private double oldIntegral;
+        private double oldTime;
+
+        private double p, i, d, integralReset;
+
+        public pid(double kP, double kI, double kD, double integralResetThreshold) {
+            runtime = new ElapsedTime();
+            oldError = 0;
+            oldIntegral = 0;
+            oldTime = 0;
+            p = kP;
+            i=kI;
+            d=kD;
+            integralReset = integralResetThreshold;
+        }
+
+        public double getPower(double goalPosition, double currentPosition) {
+
+            double integral;
+            double derivative;
+
+
+            double error = goalPosition-currentPosition;
+            double dT = runtime.milliseconds()-oldTime;
+
+            if(Math.abs(error)>integralReset)
+                oldIntegral = 0;
+
+            integral = oldIntegral + error * dT;
+            derivative = (error-oldError);
+
+            oldError = error;
+            oldIntegral = integral;
+            oldTime = runtime.milliseconds();
+
+            return p*error + i*integral + d*derivative;
         }
     }
 }
