@@ -5,72 +5,57 @@ import static org.firstinspires.ftc.teamcode.hardware.Control.motor.extendArm;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
-import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-
-import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
-import org.firstinspires.ftc.teamcode.BaseRobot;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.hardware.*;
+import org.firstinspires.ftc.teamcode.hardware.Control;
+import org.firstinspires.ftc.teamcode.hardware.Devices;
 
-import java.util.List;
-
-
-/**
- * To understand how Road Runner works and setting it up: https://learnroadrunner.com/
- */
-
-
-@Autonomous
-
-public class testingAuto extends OpMode {
+public class DuckAutoRed extends OpMode {
     SampleMecanumDrive drive;
     Trajectory traj1, traj2, traj3;
     ElapsedTime timer;
     /*
-    * Traj1: to alliance shipping hub
-    * Traj2: to freight hub
-    * Traj3: to alliance shipping hub
-    * Traj4: to freight hub
-    * */
+     * Traj1: to alliance shipping hub
+     * Traj2: to freight hub
+     * Traj3: to alliance shipping hub
+     * Traj4: to freight hub
+     * */
     boolean armExtension = false;
     boolean intake = false;
     int slidePositon;
-
-    public void init(){
+    String parkLocation = "warehouse";
+    public void init() {
         Devices.initDevices(hardwareMap);
         drive = new SampleMecanumDrive(hardwareMap);
         timer = new ElapsedTime();
 
-        Pose2d startPos = new Pose2d(10, 10, Math.toRadians(90));
+        Pose2d startPos = new Pose2d(-34, -65, Math.toRadians(90));
         drive.setPoseEstimate(startPos);
         Trajectory traj1 = drive.trajectoryBuilder(startPos)
-                .splineTo(new Vector2d(20, 20), Math.toRadians(90))
-                .addDisplacementMarker(10, () -> { //displacement in inches
-                    armExtension = true;
-                })
+                .splineTo(new Vector2d(-64, -65), Math.toRadians(180))
                 .build();
 
 
-        Trajectory traj2 = drive.trajectoryBuilder(traj1.end())
-                .strafeLeft(10)
+        Trajectory warehousePark = drive.trajectoryBuilder(traj1.end())
+                .splineTo(new Vector2d (48, -48), Math.toRadians(0))
                 .addDisplacementMarker(20, () -> {
                     intake = true;
-                })
                 .build();
 
+        Trajectory depotPark = drive.trajectoryBuilder(traj1.end())
+
+            .strafeLeft(40)
+            .splineTo(new Vector2d(-70,-34), Math.toRadians(90))
+            .build();
+
+        Trajectory parkTraj;
+        if (parkLocation.equals("warehouse")) {
+            parkTraj = warehousePark;
+        } else
+            parkTraj = depotPark;
+        
         Trajectory traj3 = drive.trajectoryBuilder(traj2.end())
                 .back(10)
                 .build();
@@ -88,54 +73,49 @@ public class testingAuto extends OpMode {
 
         return;
     }
+
     public void loop() {
-    int num = 0;
-        if (num==0) {
+        int num = 0;
+        if (num == 0) {
             drive.update();
             if (!drive.isBusy()) {
+                boolean duckServo = true;
                 drive.followTrajectoryAsync(traj2);
-                armExtension = false;
                 num++;
             }
-        }
-        else if (num == 1) {
+        } else if (num == 1) {
             drive.update();
-            if(!drive.isBusy()){
+            if (!drive.isBusy()) {
                 timer.reset();
                 drive.followTrajectoryAsync(traj3);
                 num++;
 
             }
-        }
-        else if (num==2) {
+        } else if (num == 2) {
             drive.update();
-            if (timer.seconds()>5) {
+            if (timer.seconds() > 5) {
 
                 intake = false;
                 num++;
             }
         }
 
-        if(armExtension){
-            switch(slidePositon){
+        if (armExtension) {
+            switch (slidePositon) {
                 case 1:
                     extendArm(100);
                     break;
                 case 2:
 
             }
-        } else{
+        } else {
             //de-extend arm
         }
 
-        if (intake){
+        if (intake) {
             Control.motor.intake(1.0);
         } else {
             Control.motor.intake(0.0);
         }
-
-
-
-
     }
 }
