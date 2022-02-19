@@ -19,16 +19,16 @@ public class Devices {
     // NOTE: deviceName should be the same as the name specified on the configuration
     public static void initDevices(HardwareMap hardwareMap) {
         // comment out the drive and imu initialization if you plan on using roadrunner
-        Devices.leftBackDriveMotor = hardwareMap.get(DcMotor.class, "leftBackDriveMotor");
-        Devices.rightBackDriveMotor = hardwareMap.get(DcMotor.class, "rightBackDriveMotor");
-        Devices.leftFrontDriveMotor = hardwareMap.get(DcMotor.class, "leftFrontDriveMotor");
-        Devices.rightFrontDriveMotor = hardwareMap.get(DcMotor.class, "rightFrontDriveMotor");
-        Devices.intakeSpinMotor = hardwareMap.get(DcMotor.class, "intakeSpinMotor");
-        Devices.intakeBeltMotor = hardwareMap.get(DcMotor.class, "intakeBeltMotor");
-        Devices.linearSlideMotor = hardwareMap.get(DcMotor.class, "linearSlideMotor");
+        Devices.leftBackDriveMotor = hardwareMap.get(DcMotor.class, "leftBack");
+        Devices.rightBackDriveMotor = hardwareMap.get(DcMotor.class, "rightBack");
+        Devices.leftFrontDriveMotor = hardwareMap.get(DcMotor.class, "leftFront");
+        Devices.rightFrontDriveMotor = hardwareMap.get(DcMotor.class, "rightFront");
+        Devices.intakeSpinMotor = hardwareMap.get(DcMotor.class, "intake");
+        Devices.intakeBeltMotor = hardwareMap.get(DcMotor.class, "conveyor");
+        Devices.linearSlideMotor = hardwareMap.get(DcMotor.class, "lift");
 
-        Devices.armOuttakeServo = hardwareMap.get(Servo.class, "armOuttakeServo");
-        Devices.duckServo = hardwareMap.get(CRServo.class, "duckServo");
+        Devices.armOuttakeServo = hardwareMap.get(Servo.class, "dumpy");
+        Devices.duckServo = hardwareMap.get(CRServo.class, "carousel");
 
         Control.drive.configureDriveMotors();
 

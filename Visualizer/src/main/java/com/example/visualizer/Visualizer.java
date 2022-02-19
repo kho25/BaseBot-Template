@@ -22,12 +22,16 @@ public class Visualizer {
                 // Set constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(68.88, 68.88, Math.toRadians(180), Math.toRadians(180), 12.5)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(-35, -61, Math.toRadians(90)))
-                                .splineTo(new Vector2d(-11, -47), Math.toRadians(90))
+                        drive.trajectorySequenceBuilder(new Pose2d(10, 61, Math.toRadians(-90)))
+                                .splineTo(new Vector2d(-11, 50), Math.toRadians(-90))
+                                .splineTo(new Vector2d(50, 50), Math.toRadians(0))
+                                .splineTo(new Vector2d(40, 16), Math.toRadians(-90))
+
+                                /*
                                 .strafeLeft(24)
                                 .strafeRight(24)
                                 .lineTo(new Vector2d(-60, -60))
-                                .forward(25)
+                                .forward(25)*/
                                 .build()
                 )
                 .start();

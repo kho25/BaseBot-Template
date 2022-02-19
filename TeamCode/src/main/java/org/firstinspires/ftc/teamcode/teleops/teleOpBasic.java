@@ -1,18 +1,20 @@
 package org.firstinspires.ftc.teamcode.teleops;
 
 import com.arcrobotics.ftclib.hardware.motors.Motor;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.BaseRobot;
 import org.firstinspires.ftc.teamcode.hardware.Control;
 import org.firstinspires.ftc.teamcode.hardware.Devices;
 
+@TeleOp
 public class teleOpBasic extends BaseRobot {
 
 int armExtension = 0;
 
     public void init(){
-    super.start();
-    Devices.linearSlideMotor.set;
+    super.init();
+    //Devices.linearSlideMotor.set;
     }
 
     @Override
@@ -42,18 +44,19 @@ int armExtension = 0;
 
         //outtake
         if (gamepad1.x && Devices.linearSlideMotor.getCurrentPosition()<1200){
-            Control.motor.moveMotor(Devices.linearSlideMotor, 1.0);
+            Control.motor.moveMotor(Devices.linearSlideMotor, 0.2);
         }
         else if(gamepad1.y && Devices.linearSlideMotor.getCurrentPosition()>0){
-            Control.motor.moveMotor(Devices.linearSlideMotor, -1.0);
+            Control.motor.moveMotor(Devices.linearSlideMotor, -0.2);
         }
         else{ Devices.linearSlideMotor.setPower(0);}
+        telemetry.addData("slide position: ", Devices.linearSlideMotor.getCurrentPosition());
 
         //dump freight
         if(gamepad1.a){
-            Devices.armOuttakeServo.setPosition(2);
+            Devices.armOuttakeServo.setPosition(1);
         } else {
-            Devices.armOuttakeServo.setPosition(100);//tune positions
+            Devices.armOuttakeServo.setPosition(0);//tune positions
         }
         telemetry.addData("outtake servo pose: ", Devices.armOuttakeServo.getPosition());
 

@@ -32,10 +32,7 @@ import java.util.List;
 
 @Autonomous
 
-public class RoadRunnerAuto extends OpMode {
-
-
-    public void init(){}
+public class RoadRunnerAuto extends LinearOpMode {
 
     public void runOpMode() {
         Devices.initDevices(hardwareMap);
@@ -78,24 +75,5 @@ public class RoadRunnerAuto extends OpMode {
 
         return;
     }
-    public void loop() {
 
-            if (num==0) {
-                drive.update();
-                if (!drive.isBusy()) {
-                    drive.followTrajectoryAsync(traj2);
-                    num++;
-                }
-            }
-
-            else if (num==1) {}
-
-            if (motor.getCurrentPosition()<100)
-                motor.setPower(1);
-            else
-                motor.setPower(0);
-
-
-
-    }
 }

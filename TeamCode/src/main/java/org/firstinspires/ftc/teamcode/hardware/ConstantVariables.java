@@ -32,4 +32,12 @@ public class ConstantVariables {
     public static final double K_ARM_ROTATE_PPR = 288; //encoder counts per rotation of arm rotator
 
     public static final double K_ARM_GEAR_RATIO = 1.0/2;
+
+    public static final double SERVO_OUTTAKE_POSITION = 0.0; // TODO: tune location 0.0-1.0
+    public static final double SERVO_INTAKE_POSITION = 0.0;
+
+    public static final int SLIDE_POS_ONE = 0; //TODO: tune targetPositions
+    public static final int SLIDE_POS_TWO = 0;
+    public static final int SLIDE_POS_THREE = 0;
+
 }
