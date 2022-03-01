@@ -33,34 +33,27 @@ public class DuckAutoRed extends OpMode {
 
         Pose2d startPos = new Pose2d(-34, -65, Math.toRadians(90));
         drive.setPoseEstimate(startPos);
+        //go to spin duck
         Trajectory traj1 = drive.trajectoryBuilder(startPos)
-                .splineTo(new Vector2d(-64, -65), Math.toRadians(180))
+                .splineTo(new Vector2d(-64, -65), Math.toRadians(180)
                 .build();
-
-
+        //to warehouse
         Trajectory warehousePark = drive.trajectoryBuilder(traj1.end())
                 .splineTo(new Vector2d (48, -48), Math.toRadians(0))
                 .addDisplacementMarker(20, () -> {
                     intake = true;
                 .build();
-
+        //to depot
         Trajectory depotPark = drive.trajectoryBuilder(traj1.end())
-
             .strafeLeft(40)
             .splineTo(new Vector2d(-70,-34), Math.toRadians(90))
             .build();
 
-        Trajectory parkTraj;
-        if (parkLocation.equals("warehouse")) {
-            parkTraj = warehousePark;
-        } else
-            parkTraj = depotPark;
-        
-        Trajectory traj3 = drive.trajectoryBuilder(traj2.end())
-                .back(10)
-                .build();
-
-        int num = 0;
+        Trajectory parkTraj = drive.trajectoryBuilder(traj1.end())
+            if (parkLocation.equals("warehouse")) {
+                parkTraj = warehousePark;
+            } else
+                parkTraj = depotPark;
 
         telemetry.addData(">", "Press Play to start op mode");
         telemetry.update();
@@ -80,21 +73,13 @@ public class DuckAutoRed extends OpMode {
             drive.update();
             if (!drive.isBusy()) {
                 boolean duckServo = true;
-                drive.followTrajectoryAsync(traj2);
+                Trajectory parkTraj;
+                drive.followTrajectoryAsync(parkTraj);
                 num++;
             }
         } else if (num == 1) {
             drive.update();
-            if (!drive.isBusy()) {
-                timer.reset();
-                drive.followTrajectoryAsync(traj3);
-                num++;
-
-            }
-        } else if (num == 2) {
-            drive.update();
             if (timer.seconds() > 5) {
-
                 intake = false;
                 num++;
             }
@@ -119,3 +104,15 @@ public class DuckAutoRed extends OpMode {
         }
     }
 }
+
+    private void build() {
+    }
+
+    private void build() {
+    }
+
+    private void build() {
+    }
+
+    private void build() {
+    }
