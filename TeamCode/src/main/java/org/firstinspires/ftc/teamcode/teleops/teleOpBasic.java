@@ -1,7 +1,10 @@
 package org.firstinspires.ftc.teamcode.teleops;
 
+import static org.firstinspires.ftc.teamcode.hardware.Encoders.resetMotorEnc;
+
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.BaseRobot;
 import org.firstinspires.ftc.teamcode.hardware.Control;
@@ -14,6 +17,7 @@ int armExtension = 0;
 
     public void init(){
     super.init();
+        resetMotorEnc(Devices.linearSlideMotor);
     //Devices.linearSlideMotor.set;
     }
 
@@ -43,10 +47,10 @@ int armExtension = 0;
         else { Control.motor.intake(0);}
 
         //outtake
-        if (gamepad1.x && Devices.linearSlideMotor.getCurrentPosition()<1200){
+        if (gamepad1.x && Devices.linearSlideMotor.getCurrentPosition()<1000){
             Control.motor.moveMotor(Devices.linearSlideMotor, 0.2);
         }
-        else if(gamepad1.y && Devices.linearSlideMotor.getCurrentPosition()>0){
+        else if(gamepad1.y && Devices.linearSlideMotor.getCurrentPosition()> 20){ //negative?
             Control.motor.moveMotor(Devices.linearSlideMotor, -0.2);
         }
         else{ Devices.linearSlideMotor.setPower(0);}
@@ -54,9 +58,9 @@ int armExtension = 0;
 
         //dump freight
         if(gamepad1.a){
-            Devices.armOuttakeServo.setPosition(1);
+            Devices.armOuttakeServo.setPosition(0.5);
         } else {
-            Devices.armOuttakeServo.setPosition(0);//tune positions
+            Devices.armOuttakeServo.setPosition(1);//tune positions
         }
         telemetry.addData("outtake servo pose: ", Devices.armOuttakeServo.getPosition());
 
@@ -64,7 +68,7 @@ int armExtension = 0;
         if(gamepad1.right_bumper){
             Devices.duckServo.setPower(1);
         }
-        else{
+        else {
             Devices.duckServo.setPower(0);
         }
 

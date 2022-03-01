@@ -94,8 +94,8 @@ public class Control extends Devices {
         public static void tankanumDrive(double rightPwr, double leftPwr, double lateralPwr) {
             double leftFrontPower = Range.clip(leftPwr - lateralPwr, -1.0, 1.0);
             double leftBackPower = Range.clip(leftPwr + lateralPwr, -1.0, 1.0);
-            double rightFrontPower = Range.clip(rightPwr - lateralPwr, -1.0, 1.0);
-            double rightBackPower = Range.clip(rightPwr + lateralPwr, -1.0, 1.0);
+            double rightFrontPower = Range.clip(rightPwr + lateralPwr, -1.0, 1.0); // switched from + to - might fix it
+            double rightBackPower = Range.clip(rightPwr - lateralPwr, -1.0, 1.0);
 
             leftFrontDriveMotor.setPower(leftFrontPower);
             leftBackDriveMotor.setPower(leftBackPower);

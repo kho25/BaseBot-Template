@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.autos;
+/*package org.firstinspires.ftc.teamcode.autos;
 
 import static org.firstinspires.ftc.teamcode.hardware.Control.motor.extendArm;
 
@@ -21,7 +21,7 @@ public class DuckAutoRed extends OpMode {
      * Traj2: to freight hub
      * Traj3: to alliance shipping hub
      * Traj4: to freight hub
-     * */
+     *
     boolean armExtension = false;
     boolean intake = false;
     int slidePositon;
@@ -42,7 +42,7 @@ public class DuckAutoRed extends OpMode {
                 .splineTo(new Vector2d (48, -48), Math.toRadians(0))
                 .addDisplacementMarker(20, () -> {
                     intake = true;
-                .build();
+              //  .build();
 
         Trajectory depotPark = drive.trajectoryBuilder(traj1.end())
 
@@ -119,3 +119,5 @@ public class DuckAutoRed extends OpMode {
         }
     }
 }
+
+ */

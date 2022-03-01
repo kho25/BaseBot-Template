@@ -33,7 +33,7 @@ public class Devices {
         Control.drive.configureDriveMotors();
 
         Devices.imu = hardwareMap.get(BNO055IMU.class, "imu");
-        Devices.webcam = hardwareMap.get(WebcamName.class, "Webcam 1");
+        //Devices.webcam = hardwareMap.get(WebcamName.class, "Webcam 1");
 
 //        Devices.armLiftMotor = hardwareMap.get(DcMotor.class, "armLiftMotor");
 //        Devices.armLiftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
