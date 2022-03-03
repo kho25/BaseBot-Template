@@ -29,11 +29,12 @@ import org.firstinspires.ftc.teamcode.BaseRobot;
 import org.firstinspires.ftc.teamcode.CV.IndicatorPositionPipeline;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.hardware.*;
+/*
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvWebcam;
-
+*/
 import java.util.List;
 
 
@@ -41,24 +42,40 @@ import java.util.List;
  * To understand how Road Runner works and setting it up: https://learnroadrunner.com/
  */
 
+/*
+Sequence:
+1. drop preloaded block at the alliance shipping hub
+   - trajStart
+   - extend arm
+   - drop freight
+2. drive to the warehouse and intake freight
+   - trajWarehouseStart
+   - lower arm
+   - intake
+3. drive to shared shipping hub
+   - trajAlliShip
+   - slidePosition = 1
+   - raise arm
+4. drive to warehouse and intake freight
+   - trajWarehouse
+   - lower arm
+   - intake
+5. repeat steps 3 & 4 until time is ending
+6. park in the warehouse
+ */
 
+
+//TODO: Figure out camera stuff
 @Autonomous
-
 public class redWarehouseAuto extends OpMode {
     SampleMecanumDrive drive;
     Trajectory trajStart, trajWarehouseStart, trajAlliShip, trajPark, trajWarehouse;
     ElapsedTime runtime;
     double timeMarker;
-    /*
-     * Traj1: to alliance shipping hub
-     * Traj2: to warehouse
-     * Traj3: to alliance shipping hub
-     * Traj4: park
-     * */
     boolean armExtension, intake;
     int slidePositon;
 
-    OpenCvWebcam webcam;
+    //OpenCvWebcam webcam;
     IndicatorPositionPipeline pipeline;
 
     public void initLoop(){
@@ -68,20 +85,20 @@ public class redWarehouseAuto extends OpMode {
         Devices.initDevices(hardwareMap);
         drive = new SampleMecanumDrive(hardwareMap);
         runtime = new ElapsedTime();
-        slidePositon = 1;  //TODO: change based on duck location
+        slidePositon = 3;  //TODO: change based on duck location
         armExtension = false;
         intake = false;
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        //webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         pipeline = new IndicatorPositionPipeline(telemetry);
-        webcam.setPipeline(pipeline);
-        //webcam.setMillisecondsPermissionTimeout(2500); // Timeout for obtaining permission is configurable. Set before opening.
+        /*webcam.setPipeline(pipeline);
+        webcam.setMillisecondsPermissionTimeout(2500); // Timeout for obtaining permission is configurable. Set before opening.
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
         {
             @Override
             public void onOpened() {
-                webcam.startStreaming(320, 176, OpenCvCameraRotation.UPRIGHT);
+                //webcam.startStreaming(320, 176, OpenCvCameraRotation.UPRIGHT);
             }
 
             //@Override
@@ -89,33 +106,34 @@ public class redWarehouseAuto extends OpMode {
                 telemetry.addLine("Yikes the camera couldn't open");
             }
         });
-
+*/
         Pose2d startPos = new Pose2d(10, 61, Math.toRadians(90));
         drive.setPoseEstimate(startPos);
 
         //to alliance shipping hub from starting point
-        Trajectory trajStart = drive.trajectoryBuilder(startPos)
+        trajStart = drive.trajectoryBuilder(startPos)
                 .splineTo(new Vector2d(-11, -50), Math.toRadians(90)) //TODO: tune positions
                 .addDisplacementMarker(10, () -> { //displacement in inches
                     armExtension = true;
                 })
                 .build();
         //to warehouse from post preloaded starting point
-        Trajectory trajWarehouseStart = drive.trajectoryBuilder(trajStart.end())
+        trajWarehouseStart = drive.trajectoryBuilder(trajStart.end())
                 .splineTo(new Vector2d(50, -50), Math.toRadians(0))
                 .addDisplacementMarker(20, () -> {
                     intake = true;
                 })
                 .build();
         //to alliance shipping hub
-        Trajectory trajAlliShip = drive.trajectoryBuilder(trajWarehouseStart.end())
+        trajAlliShip = drive.trajectoryBuilder(trajWarehouseStart.end())
                 .splineTo(new Vector2d(40, -16), Math.toRadians(90))
                 .addDisplacementMarker(20, () -> {
+                    slidePositon = 1;
                     armExtension = true;
                 })
                 .build();
         //park at warehouse
-        Trajectory trajPark = drive.trajectoryBuilder(trajAlliShip.end())
+        trajPark = drive.trajectoryBuilder(trajAlliShip.end())
                 .splineTo(new Vector2d(55, -55), Math.toRadians(90))
                 .addDisplacementMarker(10, () -> {
                     intake = false;
@@ -123,7 +141,7 @@ public class redWarehouseAuto extends OpMode {
                 })
                 .build();
         //to warehouse
-        Trajectory trajWarehouse = drive.trajectoryBuilder(trajAlliShip.end())
+        trajWarehouse = drive.trajectoryBuilder(trajAlliShip.end())
                 .splineTo(new Vector2d(20, 20), Math.toRadians(90))
                 .addDisplacementMarker(20, () -> {
                     intake = true;

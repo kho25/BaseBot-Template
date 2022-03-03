@@ -29,10 +29,10 @@ public class UrMomDrive extends LinearOpMode{
     @Override
     public void runOpMode() {
         //Drive motors
-        leftBack = hardwareMap.get(DcMotor.class, "leftBack");
+        leftBack = hardwareMap.get(DcMotor.class, "leftRear");
         rightFront = hardwareMap.get(DcMotor.class, "rightFront");
         leftFront = hardwareMap.get(DcMotor.class, "leftFront");
-        rightBack = hardwareMap.get(DcMotor.class, "rightBack");
+        rightBack = hardwareMap.get(DcMotor.class, "rightRear");
         rightBack.setDirection(DcMotor.Direction.REVERSE);
         rightFront.setDirection(DcMotor.Direction.REVERSE);
 
@@ -53,7 +53,7 @@ public class UrMomDrive extends LinearOpMode{
 
         // Put initialization blocks here.
         waitForStart();
-        dumpy.setPosition(0);
+        dumpy.setPosition(1);
         if (opModeIsActive()) {
             // Put run blocks here.
             while (opModeIsActive()) {
@@ -91,9 +91,9 @@ public class UrMomDrive extends LinearOpMode{
                 //move intake motors
 
                 //move linear slide
-                if (gamepad1.dpad_up || gamepad1.a) {
+                if (linearSlide.getCurrentPosition() > 1200 && (gamepad1.dpad_up || gamepad1.a)) {
                     linearSlide.setPower(1.0);
-                } else if (gamepad1.dpad_down || gamepad1.b) {
+                } else if ( linearSlide.getCurrentPosition() > 0 &&(gamepad1.dpad_down || gamepad1.b)) {
                     linearSlide.setPower(-1.0);
                 } else {
                     linearSlide.setPower(0);
@@ -101,12 +101,11 @@ public class UrMomDrive extends LinearOpMode{
 
                 //rotate dumpy
                 if (dumpyPower){
-                    dumpy.setPosition(0.7);
-                    dumpy.setPosition(0);
+                    dumpy.setPosition(0.5);
                 }
-
-
-
+                else {
+                    dumpy.setPosition(1);
+                }
 
                 telemetry.update();
             }
