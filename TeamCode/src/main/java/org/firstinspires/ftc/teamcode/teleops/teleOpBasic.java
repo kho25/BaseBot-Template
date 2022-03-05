@@ -14,6 +14,8 @@ import org.firstinspires.ftc.teamcode.hardware.Devices;
 public class teleOpBasic extends BaseRobot {
 
 int armExtension = 0;
+    int linearSlideMaxPosition = 1000;
+    int linearSlideMinPosition = 20;
 
     public void init(){
     super.init();
@@ -47,10 +49,11 @@ int armExtension = 0;
         else { Control.motor.intake(0);}
 
         //outtake
-        if (gamepad1.x && Devices.linearSlideMotor.getCurrentPosition()<1000){
+
+        if (gamepad1.x && Devices.linearSlideMotor.getCurrentPosition()<linearSlideMaxPosition){
             Control.motor.moveMotor(Devices.linearSlideMotor, 0.2);
         }
-        else if(gamepad1.y && Devices.linearSlideMotor.getCurrentPosition()> 20){ //negative?
+        else if(gamepad1.y && Devices.linearSlideMotor.getCurrentPosition()> linearSlideMinPosition){ //negative?
             Control.motor.moveMotor(Devices.linearSlideMotor, -0.2);
         }
         else{ Devices.linearSlideMotor.setPower(0);}
