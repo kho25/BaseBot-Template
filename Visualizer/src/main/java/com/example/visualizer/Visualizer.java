@@ -26,6 +26,8 @@ public class Visualizer {
                                 .splineTo(new Vector2d(-11, 50), Math.toRadians(-90))
                                 .splineTo(new Vector2d(50, 50), Math.toRadians(0))
                                 .splineTo(new Vector2d(40, 16), Math.toRadians(-90))
+                                .splineTo(new Vector2d(50, 50), Math.toRadians(0))
+                                .splineTo(new Vector2d(40, 16), Math.toRadians(-90))
 
                                 /*
                                 .strafeLeft(24)
