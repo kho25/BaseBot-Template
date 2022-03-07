@@ -14,7 +14,6 @@ public class RealTest extends LinearOpMode {
     private DcMotor rightFront;
     private DcMotor leftFront;
     private DcMotor rightBack;
-    private DcMotor conveyor;
 
     /**
      * This function is executed when this Op Mode is selected from the Driver Station.
@@ -22,10 +21,10 @@ public class RealTest extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        leftBack = hardwareMap.get(DcMotor.class, "leftRear");
+        leftBack = hardwareMap.get(DcMotor.class, "leftBack");
         rightFront = hardwareMap.get(DcMotor.class, "rightFront");
         leftFront = hardwareMap.get(DcMotor.class, "leftFront");
-        rightBack = hardwareMap.get(DcMotor.class, "rightRear");
+        rightBack = hardwareMap.get(DcMotor.class, "rightBack");
         conveyor = hardwareMap.get(DcMotor.class, "conveyor");
 
 

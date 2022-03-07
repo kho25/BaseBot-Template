@@ -33,11 +33,11 @@ public class ConstantVariables {
 
     public static final double K_ARM_GEAR_RATIO = 1.0/2;
 
-    public static final double SERVO_OUTTAKE_POSITION = 0.5; // TODO: tune location 0.0-1.0
-    public static final double SERVO_INTAKE_POSITION = 1.0;
+    public static final double SERVO_OUTTAKE_POSITION = 0.0; // TODO: tune location 0.0-1.0
+    public static final double SERVO_INTAKE_POSITION = 0.0;
 
     public static final int SLIDE_POS_ONE = 127; //TODO: tune targetPositions
     public static final int SLIDE_POS_TWO = 477;
-    public static final int SLIDE_POS_THREE = 800;
+    public static final int SLIDE_POS_THREE = 850;
 
 }

@@ -44,7 +44,7 @@ int armExtension = 0;
 
         //intake
         if(gamepad1.left_bumper){
-            Control.motor.intake(-1.0);
+            Control.motor.intake(1.0);
         }
         else { Control.motor.intake(0);}
 

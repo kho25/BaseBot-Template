@@ -19,8 +19,8 @@ public class Devices {
     // NOTE: deviceName should be the same as the name specified on the configuration
     public static void initDevices(HardwareMap hardwareMap) {
         // comment out the drive and imu initialization if you plan on using roadrunner
-        Devices.leftBackDriveMotor = hardwareMap.get(DcMotor.class, "leftRear");
-        Devices.rightBackDriveMotor = hardwareMap.get(DcMotor.class, "rightRear");
+        Devices.leftBackDriveMotor = hardwareMap.get(DcMotor.class, "leftBack");
+        Devices.rightBackDriveMotor = hardwareMap.get(DcMotor.class, "rightBack");
         Devices.leftFrontDriveMotor = hardwareMap.get(DcMotor.class, "leftFront");
         Devices.rightFrontDriveMotor = hardwareMap.get(DcMotor.class, "rightFront");
         Devices.intakeSpinMotor = hardwareMap.get(DcMotor.class, "intake");
