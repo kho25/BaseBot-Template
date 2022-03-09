@@ -29,6 +29,7 @@ public class ConstantVariables {
 
     public static final double K_DRIVE_ERROR_P = 250; // higher = less sensitive
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     public static final double K_ARM_ROTATE_PPR = 288; //encoder counts per rotation of arm rotator
 
@@ -41,6 +42,8 @@ public class ConstantVariables {
     public static final int SLIDE_POS_TWO = 477;
     public static final int SLIDE_POS_THREE = 800;
 
+=======
+>>>>>>> parent of 914326a (pid)
 =======
 >>>>>>> parent of 914326a (pid)
 }
